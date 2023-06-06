@@ -1,0 +1,39 @@
+*, *:before, *:after /*universal elector, and everything befor and after it */ 
+{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html 
+{
+    /*makes it so that the html spans for the whole viewport of screen*/
+    height: 100%; 
+}
+
+body 
+{
+    min-height: 100%;
+    line-height: 1;
+    font-family: sans-serif;
+}
+
+​h1, h2, h3, h4, h5, h6 
+{
+    font-size: 100%;
+}
+
+​input, select, /*these are for the interactive stuff like fillining in a survery*/
+option, optgroup, /*optgroup = option group (usually the list if options)*/
+textarea, button,
+pre, code /*<pre> is preformatted text, <code> is to identfy coding */
+{
+    font-size: 100%;
+    font-family: inherit;
+    /*<pre> tab indents, double-spaces, newlines, and other typographic formatting will be preserved from the html file inside a pre element*/
+}
+
+​ol, ul 
+{
+    list-style: none;
+}
