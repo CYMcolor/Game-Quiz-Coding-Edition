@@ -5,6 +5,7 @@ var answer2 = document.querySelector("#answer-2");
 var answer3 = document.querySelector("#answer-3");
 var answer4 = document.querySelector("#answer-4");
 var checker = document.querySelector("#checker");
+var timer = document.querySelector("#timer");
 
 //button evnet listeners (they share the same function)
 answer1.addEventListener("click",userAnswer);
@@ -64,8 +65,8 @@ questionList[curr].correct = 4;
 //end of assining questions-----------------------------------------
 var numberOfQuestions = questionList.length;
 
-quiz();
-
+//quiz();
+countdown();
 //The user answeres
 function userAnswer(event)
 {
@@ -117,3 +118,32 @@ function switchScore()
    
 }
 
+//countdown timer
+function countdown()
+{
+    //how many seconds left
+    var timeLeft = 10;
+    quiz();
+    //the actual timer:
+    var timeInterval = setInterval(function()
+    {
+        //display counter
+        timer.innerHTML = timeLeft + " second(s) remaing";
+        //decrements time by 1 second
+        timeLeft--;
+        //resets timer when goes to 0 and goes to score page
+        if(timeLeft == 0)
+        {
+            timer.innerHTML = "";
+            //clearInterval stops the timer
+            clearInterval(timeInterval);
+            //saves the user score regardless of where they are
+            localStorage.setItem("score", score);
+            //goes to score page
+            switchScore();
+        }
+            
+    },1000 );
+
+
+}
