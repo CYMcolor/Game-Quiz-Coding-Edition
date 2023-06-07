@@ -63,31 +63,37 @@ quiz();
 function userAnswer(event)
 {
     var buttonPressed = event.target.id;
-    index++;
+    
     console.log(index);
     console.log(buttonPressed);
+    console.log(buttonPressed.slice(-1));
+
+    if(buttonPressed.slice(-1) == questionList[index].correct)
+    {
+        score += 200;
+    }
+    console.log (score);
+    
+    index++;
+    //goes to score screen if there are no more questions
     if(index >= numberOfQuestions)
+    {
+        localStorage.setItem("score", score);
         switchScore();
+    }
+        
     quiz();
 
 }
 
-
+//displays thw current quiz and answers depending on the index
 function quiz()
 {
-       
     questionDisplay.innerHTML= questionList[index].quest;
     answer1.innerHTML= questionList[index].answr1;
     answer2.innerHTML= questionList[index].answr2;
     answer3.innerHTML= questionList[index].answr3;
     answer4.innerHTML= questionList[index].answr4;
-    
-    
-    
-    //quiz();
-    
-    console.log("quiz");
-   
 }
 
 //go to score
@@ -98,3 +104,4 @@ function switchScore()
     console.log("switched");
    
 }
+
