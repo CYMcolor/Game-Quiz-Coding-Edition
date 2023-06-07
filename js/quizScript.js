@@ -16,7 +16,7 @@ answer4.addEventListener("click",userAnswer);
 //init
 var index = 0;
 var score = 0;
-
+var timeLeft = 100;
 //init questions and answers
 
 //this establish object format
@@ -84,6 +84,9 @@ function userAnswer(event)
     else
     {
         checker.innerHTML = "Wrong!";
+        timeLeft -= 10;
+        //instantly shows the timer going down
+        timer.innerHTML = timeLeft + " second(s) remaing";
     }
     console.log (score);
     
@@ -122,7 +125,8 @@ function switchScore()
 function countdown()
 {
     //how many seconds left
-    var timeLeft = 10;
+    timeLeft = 100;
+    timer.innerHTML = timeLeft + " second(s) remaing";
     quiz();
     //the actual timer:
     var timeInterval = setInterval(function()
@@ -145,5 +149,5 @@ function countdown()
             
     },1000 );
 
-
 }
+
