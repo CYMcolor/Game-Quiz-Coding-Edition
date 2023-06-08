@@ -44,7 +44,7 @@ questionList[curr].answr3 = "3";
 questionList[curr].answr4 = "4";
 questionList[curr].correct = 2;
 //Question 2
-curr = 1;
+curr ++;
 questionList.push(new question());
 questionList[curr].quest = "What is 2 x 2?";
 questionList[curr].answr1 = "2";
@@ -53,7 +53,7 @@ questionList[curr].answr3 = "4";
 questionList[curr].answr4 = "8";
 questionList[curr].correct = 3;
 //Question 3
-curr = 2;
+curr ++;
 questionList.push(new question());
 questionList[curr].quest = "What is a mamamal?";
 questionList[curr].answr1 = "Owl";
@@ -61,43 +61,72 @@ questionList[curr].answr2 = "Spider";
 questionList[curr].answr3 = "Turtle";
 questionList[curr].answr4 = "Bear";
 questionList[curr].correct = 4;
+//Question 4
+curr ++;
+questionList.push(new question());
+questionList[curr].quest = "How many legs do spiders have?";
+questionList[curr].answr1 = "6";
+questionList[curr].answr2 = "8";
+questionList[curr].answr3 = "2";
+questionList[curr].answr4 = "4";
+questionList[curr].correct = 2;
+//Question 5
+curr ++;
+questionList.push(new question());
+questionList[curr].quest = "What is a fruit";
+questionList[curr].answr1 = "apple";
+questionList[curr].answr2 = "chicken";
+questionList[curr].answr3 = "lettuce";
+questionList[curr].answr4 = "cookie";
+questionList[curr].correct = 1;
 
-//end of assining questions-----------------------------------------
+
+//end of assigning questions-----------------------------------------
 var numberOfQuestions = questionList.length;
 
 //quiz();
 countdown();
+
 //The user answeres
+var timePoint = 0;
 function userAnswer(event)
 {
     var buttonPressed = event.target.id;
-    
+    //var mod = scoreModifier();
     console.log("index: " + index);
     console.log(buttonPressed);
-
+    
+    calcMod = mod - timePoint;
+    if (calcMod==0) //if user answers quicker than a second
+        calcMod=1;
     //checks if correct answer was pressed
+    //takes last char of element id and compares to the correct value
     if(buttonPressed.slice(-1) == questionList[index].correct)
     {
-        score += 200;
+        console.log("score modifier " + calcMod);
+        score += Math.floor(100 + (50/ calcMod));
         checker.innerHTML = "Correct!";
     }
     else
     {
         checker.innerHTML = "Wrong!";
-        timeLeft -= 10;
+        timeLeft -= 5;
         //instantly shows the timer going down
         timer.innerHTML = timeLeft + " second(s) remaing";
     }
     console.log (score);
     
+    timePoint = mod;
     index++;
     //goes to score screen if there are no more questions
     if(index >= numberOfQuestions)
     {
+        checker.innerHTML = "test last question";
+        
         localStorage.setItem("score", score);
         switchScore();
     }
-        
+    // goes to next question    
     quiz();
 
 }
@@ -125,7 +154,9 @@ function switchScore()
 function countdown()
 {
     //how many seconds left
-    timeLeft = 100;
+    timeLeft = 20;
+    //the modifier adjusts score depending on how long they took to answer
+    mod = 1;
     timer.innerHTML = timeLeft + " second(s) remaing";
     quiz();
     //the actual timer:
@@ -135,12 +166,11 @@ function countdown()
         timer.innerHTML = timeLeft + " second(s) remaing";
         //decrements time by 1 second
         timeLeft--;
+        mod ++;
         //resets timer when goes to 0 and goes to score page
         if(timeLeft == 0)
         {
-            timer.innerHTML = "";
-            //clearInterval stops the timer
-            clearInterval(timeInterval);
+            
             //saves the user score regardless of where they are
             localStorage.setItem("score", score);
             //goes to score page
@@ -151,3 +181,20 @@ function countdown()
 
 }
 
+// function wait()
+// {
+//     var wait = 0;
+//     var timeInterval = setTimeout(function()
+//     {
+//         wait++;
+//         if (wait == 20)
+//         {
+//             clearTimeout(timeInterval);
+//         }
+     
+//     },1000 );
+
+//     wait = timeInterval;
+    
+//     return wait;
+// }
