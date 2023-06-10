@@ -15,6 +15,8 @@ score.innerHTML = localStorage.getItem("score");
 //play again button
 start.addEventListener("click", switchToQuiz);
 
+initScores();
+
 function switchToQuiz()
 {
     //goes to the quiz page
@@ -35,9 +37,21 @@ form.addEventListener("submit", function(event)
 
     if (input.name === "")
         return;
-    highScoresList.push(input);
+    //list length max value of 10 replace min else just add it
+    //will replace older score in favor of new   
+    if(highScoresList.length == 10)
+    {
+        highScoresList[highScoresList.length-1] = input;
+    }
+    else
+        highScoresList.push(input);
     userName.value="";
-    console.log(highScoresList);
+    
+    //sort by score highest to lowest
+    highScoresList.sort(function(a,b)
+    {
+        return parseInt(b.score) - parseFloat(a.score);
+    });
     storeScores();
     displayScores();
     
@@ -48,19 +62,17 @@ function displayScores()
 {
     //clear highschores
     highScores.innerHTML = "";
-    
     //create new li elements for each score
-    for( var i = 0; i<highScoresList.length; i++)
+    for( var i = 0; i < highScoresList.length; i++)
     {
         var data = highScoresList[i];
 
         var li = document.createElement("li");
-        li.innerHTML = data.name + "\t\t" + data.score; 
+        li.innerHTML = i+1 + ")\t" + data.name + "\t\t" + data.score; 
 
         highScores.appendChild(li);
 
     } 
-    console.log("display score function");
     
 }
 
@@ -78,8 +90,16 @@ function initScores()
     {
         highScoresList = storedScores;
     }
+    
+    //sort by score highest to lowest
+    highScoresList.sort(function(a,b)
+    {
+        return parseInt(b.score) - parseFloat(a.score);
+    });
 
-    displayScores();
+    displayScores(highScoresList);
 }
 
-initScores();
+
+
+
