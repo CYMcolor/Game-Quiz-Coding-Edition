@@ -17,6 +17,7 @@ answer4.addEventListener("click",userAnswer);
 var index = 0;
 var score = 0;
 var timeLeft = 100;
+var rand = [];
 //init questions and answers
 
 //this establish object format
@@ -46,25 +47,25 @@ questionList.push(new question
 ));
 //Question 2
 questionList.push(new question
-    (
-        "What is 2 x 2?",
-        "2" ,
-        "6",
-        "4",
-        "8",
-        3
-    ));
+(
+    "What is 2 x 2?",
+    "2" ,
+    "6",
+    "4",
+    "8",
+    3
+));
 
 //Question 3
 questionList.push(new question
-    (
-        "What is a mamamal?",
-        "Owl" ,
-        "Spider",
-        "Turtle",
-        "Bear",
-        4
-    ));
+(
+    "What is a mamamal?",
+    "Owl" ,
+    "Spider",
+    "Turtle",
+    "Bear",
+    4
+));
 
 // Question 4
 questionList.push(new question
@@ -79,28 +80,33 @@ questionList.push(new question
 
 //Question 5
 questionList.push(new question
-    (
-        "What is a fruit",
-        "apple",
-        "chicken",
-        "lettuce",
-        "cookie",
-        1
-    ));
-
-
+(
+    "What is a fruit?",
+    "apple",
+    "chicken",
+    "lettuce",
+    "cookie",
+    1
+));
 
 
 //end of assigning questions-----------------------------------------
+
 var numberOfQuestions = questionList.length;
 
 //quiz();
+questionList = randomQuestions();
 countdown();
 
 //The user answeres
 var timePoint = 0;
 function userAnswer(event)
 {
+    //does nothing if there ar no more questions
+    if(index > numberOfQuestions-1)
+    {
+        return;
+    }
     var buttonPressed = event.target.id;
     //var mod = scoreModifier();
     console.log("index: " + index);
@@ -129,26 +135,33 @@ function userAnswer(event)
         timer.innerHTML = timeLeft + " second(s) remaing";
     }
     console.log (score);
-    
     //marks when the button was pressed
     timePoint = counter;
-    //goes to next index for the next question
-    index++;
-    //goes to score screen if there are no more questions
-    if(index >= numberOfQuestions)
+    
+    if(index == numberOfQuestions -1)
     {
-        checker.innerHTML = "test last question";
-        
+        //check last question
+        if(buttonPressed.slice(-1) == questionList[index].correct)
+            checker.innerHTML = "This question was: Correct!";
+        else
+            checker.innerHTML = "This question was: Wrong!";
         localStorage.setItem("score", score);
-        switchScore();
+        //waits 2 seconds b4 switching pages to see if last question was correct or not
+        wait();
+        
     }
-    // goes to next question    
-    quiz();
+    else
+    {
+        //goes to index of next question
+        index++;
+        // goes to next question 
+        nextQ();   
+    }
 
 }
 
 //displays thw current quiz and answers depending on the index
-function quiz()
+function nextQ()
 {
     questionDisplay.innerHTML= questionList[index].quest;
     answer1.innerHTML = questionList[index].answr1;
@@ -178,7 +191,7 @@ function countdown()
     counter = 0;
     timer.innerHTML = timeLeft + " second(s) remaing";
     //displays 1st question in the quiz
-    quiz();
+    nextQ();
     //the actual timer:
     var timeInterval = setInterval(function()
     {
@@ -190,7 +203,7 @@ function countdown()
         //resets timer when goes to 0 and goes to score page
         if(timeLeft <= 0)
         {
-            
+            clearInterval(timeInterval);
             //saves the user score regardless of where they are
             localStorage.setItem("score", score);
             //goes to score page
@@ -201,23 +214,49 @@ function countdown()
 
 }
 
+function wait()
+{
+    var timeInterval = setTimeout(function()
+    {
+       switchScore();
+    },1500 );
+}
 
 
+//make random index
+function randomIndex()
+{
+  var newArray = Array();
+  var curr;
+  for (let i = 0; i < numberOfQuestions; i++)
+  {
+    //makes random index
+    curr = Math.floor(Math.random()* numberOfQuestions);
 
-// function wait()
-// {
-//     var wait = 0;
-//     var timeInterval = setTimeout(function()
-//     {
-//         wait++;
-//         if (wait == 20)
-//         {
-//             clearTimeout(timeInterval);
-//         }
-     
-//     },1000 );
+    if(!newArray.includes(curr)) //if there are no repeats add new number
+    {
+      newArray[i] = curr;
+    }
+    else //if there are repeats
+    {
+      while(newArray.includes(curr)) //loops until number is no longer a repeat
+      {
+        curr = Math.floor(Math.random()* numberOfQuestions);
+      }
+      newArray[i] = curr;
+    }
+  }
+  console.log(newArray);
+  return newArray;
+}
 
-//     wait = timeInterval;
-    
-//     return wait;
-// }
+//randomize the questions
+function randomQuestions()
+{
+    var randIndex = randomIndex(); 
+    for (let i = 0; i < numberOfQuestions; i++)
+    {
+        rand.push(questionList[randIndex[i]]);
+    }
+    return rand;
+}
