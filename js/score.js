@@ -38,6 +38,7 @@ form.addEventListener("submit", function(event)
     highScoresList.push(input);
     userName.value="";
     console.log(highScoresList);
+    storeScores();
     displayScores();
     
 });
@@ -61,7 +62,24 @@ function displayScores()
     } 
     console.log("display score function");
     
-
 }
 
-displayScores();
+function storeScores()
+{
+    localStorage.setItem("scores", JSON.stringify(highScoresList));
+}
+
+function initScores()
+{
+    var storedScores = JSON.parse(localStorage.getItem("scores"));
+
+    //if the scores aren't empty update
+    if (storedScores !== null) 
+    {
+        highScoresList = storedScores;
+    }
+
+    displayScores();
+}
+
+initScores();
