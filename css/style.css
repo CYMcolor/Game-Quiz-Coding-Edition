@@ -1,4 +1,59 @@
+
+
 body
 {
+    background-image: linear-gradient(rgb(131, 156, 216), rgb(201, 214, 244));
     background-color: rgb(201, 214, 244);
+    font-family: sans-serif;
+    text-align: center;
+    align-items: center;
+    min-height: 100vh;
+}
+main > *
+{
+    font-size: 20px;
+}
+
+h1
+{
+    margin: 30px;
+}
+
+
+.btn
+{
+    border-radius: 25px;
+    border-color: darkorchid;
+    margin: 16px;
+    padding: 14px 34px;
+    color: rgb(22, 6, 81);
+    background-color: rgb(184, 154, 255);
+    font-size: 20px;
+}
+
+.q
+{
+    min-width: 600px;
+    align-items: center;
+    
+    
+}
+
+/*score page*/
+#name
+{
+    margin-left: 10px;
+    min-width: 100px;
+}
+
+#scoreList
+{
+    text-align: right;
+    margin-left: 50px;
+}
+
+ul 
+{
+    list-style: none;
+    
 }

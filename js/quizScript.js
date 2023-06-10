@@ -25,10 +25,10 @@ var question = function(quest, answr1,answr2,answr3,answr4,correct)
 {
     this.quest = quest;
     this.answr1 = answr1;
-    this.answr2= answr2;
-    this.answr3= answr3;
-    this.answr4= answr4;
-    this.correct= correct
+    this.answr2 = answr2;
+    this.answr3 = answr3;
+    this.answr4 = answr4;
+    this.correct = correct
 }
 
 //this creates array of the question object
@@ -38,57 +38,56 @@ var questionList = [];
 //Question 1
 questionList.push(new question
 (
-    "What is 1 +1",
-    "1" ,
-    "2",
-    "3",
-    "4",
-    2
+    "Commonly used data types do NOT include",
+    "strings",
+    "booleans",
+    "alerts",
+    "numbers",
+    3
 ));
 //Question 2
 questionList.push(new question
 (
-    "What is 2 x 2?",
-    "2" ,
-    "6",
-    "4",
-    "8",
+    "The condition in an if/else statement is enclosed with _______.",
+    "quotes" ,
+    "curly brackets",
+    "parenthesis",
+    "square brackets",
     3
 ));
 
 //Question 3
 questionList.push(new question
 (
-    "What is a mamamal?",
-    "Owl" ,
-    "Spider",
-    "Turtle",
-    "Bear",
+    "A very useful tool used during development and debugging for printing content to the debugger is:",
+    "JavaScript" ,
+    "terminal/bash",
+    "for loops",
+    "console.log",
     4
 ));
 
 // Question 4
 questionList.push(new question
-    (
-        "How many legs do spiders have?",
-        "6" ,
-        "8",
-        "2",
-        "4",
-        2
-    ));
+(
+    "Arrays in JavaScript can be used to store __________.",
+    "numbers and strings" ,
+    "other arrays",
+    "booleans",
+    "all of the above",
+    4
+));
 
 //Question 5
 questionList.push(new question
 (
-    "What is a fruit?",
-    "apple",
-    "chicken",
-    "lettuce",
-    "cookie",
-    1
+    "String values must be enclosed within ________ when being assigned to variables.",
+    "commas",
+    "curly brackets",
+    "quotes",
+    "parenthesis",
+    3
 ));
-
 
 //end of assigning questions-----------------------------------------
 
@@ -102,10 +101,10 @@ countdown();
 var timePoint = 0;
 function userAnswer(event)
 {
-    //does nothing if there ar no more questions
+    //goes to score if there ar no more questions
     if(index > numberOfQuestions-1)
     {
-        return;
+        switchScore();
     }
     var buttonPressed = event.target.id;
     //var mod = scoreModifier();
@@ -246,8 +245,9 @@ function randomIndex()
       newArray[i] = curr;
     }
   }
-  console.log(newArray);
+
   return newArray;
+
 }
 
 //randomize the questions

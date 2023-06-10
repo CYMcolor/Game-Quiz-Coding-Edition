@@ -68,9 +68,17 @@ function displayScores()
         var data = highScoresList[i];
 
         var li = document.createElement("li");
-        li.innerHTML = i+1 + ")\t" + data.name + "\t\t" + data.score; 
+        var spanName = document.createElement("span");
+        var spanScore = document.createElement("span");
+        spanName.setAttribute("id", "name");
+        spanScore.setAttribute("id", "scoreList")
+        li.innerHTML = i+1 + ")\t"; 
+        spanName.innerHTML = data.name;
+        spanScore.innerHTML =  data.score;
 
         highScores.appendChild(li);
+        li.appendChild(spanName);
+        li.appendChild(spanScore);
 
     } 
     
@@ -99,7 +107,3 @@ function initScores()
 
     displayScores(highScoresList);
 }
-
-
-
-
