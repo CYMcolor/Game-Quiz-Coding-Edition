@@ -20,14 +20,14 @@ var timeLeft = 100;
 //init questions and answers
 
 //this establish object format
-var question = function()
+var question = function(quest, answr1,answr2,answr3,answr4,correct)
 {
-    this.quest = "";
-    this.answr1 = "";
-    this.answr2= "";
-    this.answr3= "";
-    this.answr4= "";
-    this.correct= 0
+    this.quest = quest;
+    this.answr1 = answr1;
+    this.answr2= answr2;
+    this.answr3= answr3;
+    this.answr4= answr4;
+    this.correct= correct
 }
 
 //this creates array of the question object
@@ -35,50 +35,60 @@ var questionList = [];
 
 //assgin values------------------------------------------------------
 //Question 1
-var curr = 0;
-questionList.push(new question());
-questionList[curr].quest = "What is 1 + 1?";
-questionList[curr].answr1 = "1";
-questionList[curr].answr2 = "2";
-questionList[curr].answr3 = "3";
-questionList[curr].answr4 = "4";
-questionList[curr].correct = 2;
+questionList.push(new question
+(
+    "What is 1 +1",
+    "1" ,
+    "2",
+    "3",
+    "4",
+    2
+));
 //Question 2
-curr ++;
-questionList.push(new question());
-questionList[curr].quest = "What is 2 x 2?";
-questionList[curr].answr1 = "2";
-questionList[curr].answr2 = "6";
-questionList[curr].answr3 = "4";
-questionList[curr].answr4 = "8";
-questionList[curr].correct = 3;
+questionList.push(new question
+    (
+        "What is 2 x 2?",
+        "2" ,
+        "6",
+        "4",
+        "8",
+        3
+    ));
+
 //Question 3
-curr ++;
-questionList.push(new question());
-questionList[curr].quest = "What is a mamamal?";
-questionList[curr].answr1 = "Owl";
-questionList[curr].answr2 = "Spider";
-questionList[curr].answr3 = "Turtle";
-questionList[curr].answr4 = "Bear";
-questionList[curr].correct = 4;
-//Question 4
-curr ++;
-questionList.push(new question());
-questionList[curr].quest = "How many legs do spiders have?";
-questionList[curr].answr1 = "6";
-questionList[curr].answr2 = "8";
-questionList[curr].answr3 = "2";
-questionList[curr].answr4 = "4";
-questionList[curr].correct = 2;
+questionList.push(new question
+    (
+        "What is a mamamal?",
+        "Owl" ,
+        "Spider",
+        "Turtle",
+        "Bear",
+        4
+    ));
+
+// Question 4
+questionList.push(new question
+    (
+        "How many legs do spiders have?",
+        "6" ,
+        "8",
+        "2",
+        "4",
+        2
+    ));
+
 //Question 5
-curr ++;
-questionList.push(new question());
-questionList[curr].quest = "What is a fruit";
-questionList[curr].answr1 = "apple";
-questionList[curr].answr2 = "chicken";
-questionList[curr].answr3 = "lettuce";
-questionList[curr].answr4 = "cookie";
-questionList[curr].correct = 1;
+questionList.push(new question
+    (
+        "What is a fruit",
+        "apple",
+        "chicken",
+        "lettuce",
+        "cookie",
+        1
+    ));
+
+
 
 
 //end of assigning questions-----------------------------------------
@@ -95,28 +105,34 @@ function userAnswer(event)
     //var mod = scoreModifier();
     console.log("index: " + index);
     console.log(buttonPressed);
-    
-    calcMod = mod - timePoint;
-    if (calcMod==0) //if user answers quicker than a second
-        calcMod=1;
-    //checks if correct answer was pressed
-    //takes last char of element id and compares to the correct value
+    /*
+    howLong indicates how long the user took to answer the question
+    bonus calculates the remaning time compared to the howLong
+    the shorter the time the longer the bonus
+    */
+    howLong = counter - timePoint;
+    bonus = (timerLength - howLong)*scoreMult;
+    console.log("how long " + howLong);
+    /*checks if correct answer was pressed
+    takes last char of element id and compares to the correct value */
     if(buttonPressed.slice(-1) == questionList[index].correct)
     {
-        console.log("score modifier " + calcMod);
-        score += Math.floor(100 + (50/ calcMod));
+        console.log("bonus points " + bonus);
+        score += Math.floor(200 + bonus);
         checker.innerHTML = "Correct!";
     }
     else
     {
         checker.innerHTML = "Wrong!";
-        timeLeft -= 5;
+        timeLeft -= Math.floor(timerLength/10);
         //instantly shows the timer going down
         timer.innerHTML = timeLeft + " second(s) remaing";
     }
     console.log (score);
     
-    timePoint = mod;
+    //marks when the button was pressed
+    timePoint = counter;
+    //goes to next index for the next question
     index++;
     //goes to score screen if there are no more questions
     if(index >= numberOfQuestions)
@@ -153,11 +169,15 @@ function switchScore()
 //countdown timer
 function countdown()
 {
+    timerLength = 10 * questionList.length;
     //how many seconds left
-    timeLeft = 20;
-    //the modifier adjusts score depending on how long they took to answer
-    mod = 1;
+    timeLeft = timerLength;
+    //score multiplier
+    scoreMult = 50 / timerLength;
+    //time taken counter
+    counter = 0;
     timer.innerHTML = timeLeft + " second(s) remaing";
+    //displays 1st question in the quiz
     quiz();
     //the actual timer:
     var timeInterval = setInterval(function()
@@ -166,9 +186,9 @@ function countdown()
         timer.innerHTML = timeLeft + " second(s) remaing";
         //decrements time by 1 second
         timeLeft--;
-        mod ++;
+        counter ++;
         //resets timer when goes to 0 and goes to score page
-        if(timeLeft == 0)
+        if(timeLeft <= 0)
         {
             
             //saves the user score regardless of where they are
@@ -180,6 +200,9 @@ function countdown()
     },1000 );
 
 }
+
+
+
 
 // function wait()
 // {
