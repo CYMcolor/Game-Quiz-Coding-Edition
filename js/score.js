@@ -67,8 +67,11 @@ form.addEventListener("submit", function(event)
     {
         return parseInt(b.score) - parseFloat(a.score);
     });
+
     storeScores();
     displayScores();
+    //removes form so nobody submits more than once
+    form.remove();
     
 });
 

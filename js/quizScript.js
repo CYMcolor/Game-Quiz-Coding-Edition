@@ -130,7 +130,7 @@ function userAnswer(event)
     }
     else
     {
-        checker.setAttribute("style","color: red");
+        checker.setAttribute("style","color: darkred");
         checker.innerHTML = "Wrong!";
         timeLeft -= Math.floor(timerLength/10);
         //instantly shows the timer going down
@@ -150,7 +150,7 @@ function userAnswer(event)
         }
         else
         {
-            checker.setAttribute("style","color: red");
+            checker.setAttribute("style","color: darkred");
             checker.innerHTML = "This question was: Wrong!";
         }
             
