@@ -7,7 +7,8 @@ var form = document.querySelector("#form")
 var highScores = document.querySelector("#high-scores");
 //storage of highscore
 var highScoresList = [];
-
+//check if we swithed from quiz page
+var switched = localStorage.getItem("fromSwitch");
 //get score from the current quiz results
 currentScore = localStorage.getItem("score");
 score.innerHTML = localStorage.getItem("score");
@@ -15,6 +16,12 @@ score.innerHTML = localStorage.getItem("score");
 //play again button
 start.addEventListener("click", switchToQuiz);
 
+//console.log("test switch: ", switched);
+if(switched == "false")
+{
+    console.log("test switch: ", switched);
+    form.remove();
+}
 initScores();
 
 function switchToQuiz()
@@ -35,31 +42,29 @@ form.addEventListener("submit", function(event)
         score: currentScore
      }
 
+    localStorage.setItem("fromSwitch",false);
+
     if (input.name === "")
         return;
     //list length max value of 10 replace min else just add it
     //will replace older score in favor of new 
-    
-    if(highScoresList.length == 0) //code freaks out if there is nothing in the array so start with pushing one
+    console.log(input);
+    console.log(highScoresList.length);
+    console.log(highScoresList);
+    var min;
+    if(highScoresList.length >= 0 && highScoresList.length < 10)
     {
         highScoresList.push(input);
-        storeScores();
-        displayScores();
-        return;
-    }
-    var min = parseInt(highScoresList[highScoresList.length-1].score);
-    if (parseInt(highScoresList[highScoresList.length-1].score) > parseInt(input.score))
-    {
-        //if score is lower than the lowest high score do nothing
-    }
-    else if(highScoresList.length >= 10 &&  min <= parseInt(input.score))
+    }        
+    else if (highScoresList.length >=10) 
     {
         //if last reached to the tenth slot, check if the input is greater
         // replace input with the last one
-        highScoresList[highScoresList.length-1] = input;
+        if(parseInt(highScoresList[highScoresList.length-1].score) <= parseInt(input.score))
+            highScoresList[highScoresList.length-1] = input;
     }
-    else if( highScoresList.length != 0)  //for when the list has not reached ten
-        highScoresList.push(input);
+
+    
     userName.value="";
     
     //sort by score highest to lowest
@@ -109,6 +114,7 @@ function storeScores()
 
 function initScores()
 {
+
     var storedScores = JSON.parse(localStorage.getItem("scores"));
 
     //if the scores aren't empty update
@@ -125,3 +131,23 @@ function initScores()
 
     displayScores(highScoresList);
 }
+
+/*
+// if(highScoresList.length == 0) //code freaks out if there is nothing in the array so start with pushing one
+    // {
+    //     highScoresList.push(input);
+    //     storeScores();
+    //     displayScores();
+    //     //form.remove();
+    //     return;
+    // }
+    // var min = parseInt(highScoresList[highScoresList.length-1].score);
+    // if(highScoresList.length >= 10 &&  min <= parseInt(input.score))
+    // {
+    //     //if last reached to the tenth slot, check if the input is greater
+    //     // replace input with the last one
+    //     highScoresList[highScoresList.length-1] = input;
+    // }
+    // else if( highScoresList.length > 0 && first == false)  //for when the list has not reached ten
+    //     highScoresList.push(input);
+*/

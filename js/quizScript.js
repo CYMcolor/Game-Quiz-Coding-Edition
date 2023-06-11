@@ -19,6 +19,9 @@ var index = 0;
 var score = 0;
 var timeLeft = 100;
 var rand = [];
+//test to see if scores was from quiz page
+localStorage.setItem("fromSwitch",true);
+
 //init questions and answers
 
 //this establish object format
