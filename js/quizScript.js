@@ -148,20 +148,18 @@ function userAnswer(event)
         //check last question
         if(buttonPressed.slice(-1) == questionList[index].correct)
         {
-            checker.setAttribute("style","color: darkgreen");
-            checker.innerHTML = "This question was: Correct!";
+            localStorage.setItem("last", "Last question was correct!");
         }
         else
         {
-            checker.setAttribute("style","color: darkred");
-            checker.innerHTML = "This question was: Wrong!";
+            localStorage.setItem("last", "Last question was wrong!");
         }
             
         localStorage.setItem("score", score);
         //goes to index of next question
         index++;
         //waits 2 seconds b4 switching pages to see if last question was correct or not
-        wait();
+        switchScore();
         
     }
     else

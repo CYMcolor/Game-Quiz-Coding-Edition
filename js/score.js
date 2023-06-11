@@ -10,20 +10,32 @@ var highScoresList = [];
 //check if we swithed from quiz page
 var switched = localStorage.getItem("fromSwitch");
 //get score from the current quiz results
-currentScore = localStorage.getItem("score");
+var currentScore = localStorage.getItem("score");
 score.innerHTML = localStorage.getItem("score");
+//show the last question resuly
+var last = localStorage.getItem("last");
 
 //play again button
 start.addEventListener("click", switchToQuiz);
 
-//console.log("test switch: ", switched);
+//if the user didn't play the quiz don't show submit form
 if(switched == "false")
 {
-    console.log("test switch: ", switched);
     form.remove();
 }
+
+document.querySelector("#last").innerHTML = last;
 initScores();
 
+// sumbit is not available if score is too low
+if (highScoresList.length == 10) 
+{
+    //if score is less than the min
+    if(parseInt(highScoresList[highScoresList.length-1].score) > parseInt(currentScore))
+        form.remove();
+}
+
+///functions--------------------
 function switchToQuiz()
 {
     //goes to the quiz page
@@ -43,15 +55,17 @@ form.addEventListener("submit", function(event)
      }
 
     localStorage.setItem("fromSwitch",false);
-
-    if (input.name === "")
+    // resets text input
+    userName.value="";
+    // checks for invalid input
+    if (input.name === "" || input.name.length > 3)
+    {
+        userName.placeholder="Please enter 1-3 characters";
         return;
+    }
+        
     //list length max value of 10 replace min else just add it
     //will replace older score in favor of new 
-    console.log(input);
-    console.log(highScoresList.length);
-    console.log(highScoresList);
-    var min;
     if(highScoresList.length >= 0 && highScoresList.length < 10)
     {
         highScoresList.push(input);
@@ -132,22 +146,3 @@ function initScores()
     displayScores(highScoresList);
 }
 
-/*
-// if(highScoresList.length == 0) //code freaks out if there is nothing in the array so start with pushing one
-    // {
-    //     highScoresList.push(input);
-    //     storeScores();
-    //     displayScores();
-    //     //form.remove();
-    //     return;
-    // }
-    // var min = parseInt(highScoresList[highScoresList.length-1].score);
-    // if(highScoresList.length >= 10 &&  min <= parseInt(input.score))
-    // {
-    //     //if last reached to the tenth slot, check if the input is greater
-    //     // replace input with the last one
-    //     highScoresList[highScoresList.length-1] = input;
-    // }
-    // else if( highScoresList.length > 0 && first == false)  //for when the list has not reached ten
-    //     highScoresList.push(input);
-*/
