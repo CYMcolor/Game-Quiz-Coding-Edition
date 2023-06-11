@@ -2,8 +2,8 @@
 
 body
 {
-    background-image: linear-gradient(rgb(131, 156, 216), rgb(201, 214, 244));
-    background-color: rgb(201, 214, 244);
+    background-image: linear-gradient(rgb(139, 195, 247), rgb(201, 214, 244));
+    
     font-family: sans-serif;
     text-align: center;
     align-items: center;
@@ -20,24 +20,41 @@ h1
 }
 
 
+#timer
+{
+    width:100px;
+    height:75px;
+    line-height: 75px;
+    border-width: 30px;
+    border-radius: 50%;
+    background-color: rgb(7, 131, 255);
+    color:azure;
+    margin: 0  auto;
+    
+}
+
+#question
+{
+    font-size: 30px;
+}
+
 .btn
 {
     border-radius: 25px;
-    border-color: darkorchid;
+    border-color: rgb(50, 181, 204);
     margin: 16px;
     padding: 14px 34px;
-    color: rgb(22, 6, 81);
-    background-color: rgb(184, 154, 255);
+    color: rgb(237, 233, 255);
+    background-color: rgb(36, 26, 210);
     font-size: 20px;
 }
 
-.q
+.but-q
 {
-    min-width: 600px;
-    align-items: center;
-    
-    
+    min-width: 300px;
+    align-items: center;    
 }
+
 
 /*score page*/
 #name
@@ -55,5 +72,6 @@ h1
 ul 
 {
     list-style: none;
+    padding: 0;
     
 }

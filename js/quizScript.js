@@ -6,6 +6,7 @@ var answer3 = document.querySelector("#answer-3");
 var answer4 = document.querySelector("#answer-4");
 var checker = document.querySelector("#checker");
 var timer = document.querySelector("#timer");
+var checker = document.querySelector("#checker");
 
 //button evnet listeners (they share the same function)
 answer1.addEventListener("click",userAnswer);
@@ -124,14 +125,16 @@ function userAnswer(event)
     {
         console.log("bonus points " + bonus);
         score += Math.floor(200 + bonus);
+        checker.setAttribute("style","color: darkgreen");
         checker.innerHTML = "Correct!";
     }
     else
     {
+        checker.setAttribute("style","color: red");
         checker.innerHTML = "Wrong!";
         timeLeft -= Math.floor(timerLength/10);
         //instantly shows the timer going down
-        timer.innerHTML = timeLeft + " second(s) remaing";
+        timer.innerHTML = "time: "+ timeLeft;
     }
     console.log (score);
     //marks when the button was pressed
@@ -141,10 +144,19 @@ function userAnswer(event)
     {
         //check last question
         if(buttonPressed.slice(-1) == questionList[index].correct)
+        {
+            checker.setAttribute("style","color: darkgreen");
             checker.innerHTML = "This question was: Correct!";
+        }
         else
+        {
+            checker.setAttribute("style","color: red");
             checker.innerHTML = "This question was: Wrong!";
+        }
+            
         localStorage.setItem("score", score);
+        //goes to index of next question
+        index++;
         //waits 2 seconds b4 switching pages to see if last question was correct or not
         wait();
         
@@ -188,14 +200,14 @@ function countdown()
     scoreMult = 50 / timerLength;
     //time taken counter
     counter = 0;
-    timer.innerHTML = timeLeft + " second(s) remaing";
+    timer.innerHTML = "time: "+ timeLeft;
     //displays 1st question in the quiz
     nextQ();
     //the actual timer:
     var timeInterval = setInterval(function()
     {
         //display counter
-        timer.innerHTML = timeLeft + " second(s) remaing";
+        timer.innerHTML = "time: "+ timeLeft;
         //decrements time by 1 second
         timeLeft--;
         counter ++;

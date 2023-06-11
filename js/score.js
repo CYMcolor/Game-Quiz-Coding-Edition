@@ -38,12 +38,27 @@ form.addEventListener("submit", function(event)
     if (input.name === "")
         return;
     //list length max value of 10 replace min else just add it
-    //will replace older score in favor of new   
-    if(highScoresList.length == 10)
+    //will replace older score in favor of new 
+    
+    if(highScoresList.length == 0) //code freaks out if there is nothing in the array so start with pushing one
     {
+        highScoresList.push(input);
+        storeScores();
+        displayScores();
+        return;
+    }
+    var min = parseInt(highScoresList[highScoresList.length-1].score);
+    if (parseInt(highScoresList[highScoresList.length-1].score) > parseInt(input.score))
+    {
+        //if score is lower than the lowest high score do nothing
+    }
+    else if(highScoresList.length >= 10 &&  min <= parseInt(input.score))
+    {
+        //if last reached to the tenth slot, check if the input is greater
+        // replace input with the last one
         highScoresList[highScoresList.length-1] = input;
     }
-    else
+    else if( highScoresList.length != 0)  //for when the list has not reached ten
         highScoresList.push(input);
     userName.value="";
     
